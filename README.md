@@ -11,3 +11,4 @@ Anggota :
 # Timeline
 1. Created a Dashboard placeholder
 2. Updated lib where adding new folder for sidebar menu and footer
+3. Added an Assets/Images folder and updated pubspec.yaml flutter
