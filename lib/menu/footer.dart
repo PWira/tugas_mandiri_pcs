@@ -10,7 +10,7 @@ class Footer extends StatelessWidget {
       color: Colors.blue,
       child: Center(
         child: Text(
-          'About Us | © 2023 One And Four',
+          'About Us | © 2023 GarudaAbiz',
           style: TextStyle(
             color: Colors.white,
             fontFamily: 'Montserrat',

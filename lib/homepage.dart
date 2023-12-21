@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends StatelessWidget {
+  final String username;
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
+  HomePage({required this.username});
 
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,15 +22,13 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-
             Container(
               height: 200,
               child: Image.asset(
-                "assets/images/animewall.png",
+                "assets/images/animewall.png", // Make sure this path is correct
                 fit: BoxFit.cover,
               ),
             ),
-
             Container(
               padding: EdgeInsets.all(20),
               child: Text(
@@ -44,7 +39,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
