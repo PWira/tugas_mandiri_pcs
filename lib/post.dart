@@ -1,4 +1,43 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+
+Future<File?> pickImage() async {
+  final picker = ImagePicker();
+  final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+  if (pickedFile != null) {
+    return File(pickedFile.path);
+  } else {
+    print('No image selected.');
+    return null;
+  }
+}
+
+Future<void> postImage(File imageFile) async {
+  final url = 'YOUR_SERVER_ENDPOINT'; // Replace with your server endpoint
+
+  // Create a multipart request
+  var request = http.MultipartRequest('POST', Uri.parse(url));
+
+  // Attach the file
+  request.files.add(await http.MultipartFile.fromPath('image', imageFile.path));
+
+  // Send the request
+  try {
+    final response = await request.send();
+    if (response.statusCode == 200) {
+      print('Image uploaded successfully!');
+    } else {
+      print('Failed to upload image. Status code: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error uploading image: $e');
+  }
+}
 
 void main() {
   runApp(MyApp());
@@ -19,6 +58,7 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPageState extends State<PostPage> {
+  File? _image;
   TextEditingController _titleController = TextEditingController();
   TextEditingController _contentController = TextEditingController();
 
@@ -26,7 +66,7 @@ class _PostPageState extends State<PostPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Post'),
+        title: Text('Create Post'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -37,7 +77,7 @@ class _PostPageState extends State<PostPage> {
             TextFormField(
               controller: _titleController,
               decoration: InputDecoration(
-                labelText: 'Judul',
+                labelText: 'Title',
               ),
             ),
             SizedBox(height: 16.0),
@@ -47,26 +87,37 @@ class _PostPageState extends State<PostPage> {
               controller: _contentController,
               maxLines: 5,
               decoration: InputDecoration(
-                labelText: 'Isi postingan',
+                labelText: 'Content',
               ),
             ),
             SizedBox(height: 16.0),
 
             // Gambar
             GestureDetector(
-              onTap: () {
-                // Tambahkan logika untuk memilih gambar
-                print('Pilih gambar');
+              onTap: () async {
+                File? image = await pickImage();
+                if (image != null) {
+                  setState(() {
+                    _image = image;
+                  });
+                }
               },
               child: Container(
                 height: 100.0,
                 color: Colors.grey[200],
                 child: Center(
-                  child: Icon(
-                    Icons.camera_alt,
-                    size: 40.0,
-                    color: Colors.grey,
-                  ),
+                  child: _image == null
+                      ? Icon(
+                          Icons.camera_alt,
+                          size: 40.0,
+                          color: Colors.grey,
+                        )
+                      : Image.file(
+                          _image!,
+                          height: 100.0,
+                          width: 100.0,
+                          fit: BoxFit.cover,
+                        ),
                 ),
               ),
             ),
@@ -75,7 +126,6 @@ class _PostPageState extends State<PostPage> {
             // Tombol Post
             ElevatedButton(
               onPressed: () {
-                // Tambahkan logika untuk memposting
                 _post();
               },
               child: Text('Post'),
@@ -93,5 +143,10 @@ class _PostPageState extends State<PostPage> {
 
     // Simpan logika posting disini
     print('Posting: $title - $content');
+
+    if (_image != null) {
+      // Post the image to the server
+      postImage(_image!);
+    }
   }
 }
