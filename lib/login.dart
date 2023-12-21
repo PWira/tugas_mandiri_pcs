@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'homepage.dart'; 
+import 'package:ui_ux_mandiri/homepage.dart';
 
-class Login extends StatelessWidget {
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Login App',
-      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -24,81 +27,113 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  void _login() {
-    String username = _usernameController.text;
-    String password = _passwordController.text;
-    if (username == 'user' && password == 'password') {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()), // Use HomePage here
-      );
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Login Failed'),
-            content: Text('Invalid username or password.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Text(
-                "LOGIN DULU",
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          height: 300.0,
+          width: 300.0,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Login',
                 style: TextStyle(
-                  fontWeight: FontWeight.bold
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            Padding(padding: EdgeInsets.only(bottom: 20)),
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(
-                labelText: 'Username',
-                border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.all(10),
+              SizedBox(height: 16.0),
+              TextField(
+                controller: _usernameController,
+                decoration: InputDecoration(labelText: 'Username'),
               ),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.all(10),
+              SizedBox(height: 16.0),
+              TextField(
+                controller: _passwordController,
+                obscureText: true,
+                decoration: InputDecoration(labelText: 'Password'),
               ),
-            ),
-            SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: _login,
-              child: Text('Login'),
-            ),
-          ],
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: () {
+                  _login();
+                },
+                child: Text('Login'),
+              ),
+              SizedBox(height: 16.0),
+              TextButton(
+                onPressed: () {
+                  _showSignUpDialog();
+                },
+                child: Text('Create an Account'),
+              ),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  void _login() {
+  String username = _usernameController.text;
+  String password = _passwordController.text;
+
+  // Contoh sederhana, cocokkan username dan password
+  if (username == 'user' && password == 'password') {
+    // Berhasil login, alihkan ke halaman homepage
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HomePage()), // Gantilah HomePage() dengan nama class halaman homepage Anda
+    );
+
+    // Tampilkan snackbar atau pesan lainnya jika diperlukan
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Login berhasil')),
+    );
+  } else {
+    // Gagal login, tampilkan pesan kesalahan
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Login gagal. Periksa username dan password')),
+    );
+  }
+}
+
+  void _showSignUpDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Create an Account'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                decoration: InputDecoration(labelText: 'Username'),
+              ),
+              SizedBox(height: 16.0),
+              TextField(
+                obscureText: true,
+                decoration: InputDecoration(labelText: 'Password'),
+              ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Create Account'),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
