@@ -52,9 +52,9 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.all(20),
                   child: ElevatedButton(
                     onPressed: () {
-                      // Aksi tombol 1
+                      Navigator.pushNamed(context,'/post');
                     },
-                    child: Text("Tombol 1"),
+                    child: Text("Post"),
                   ),
                 ),
                 Container(
