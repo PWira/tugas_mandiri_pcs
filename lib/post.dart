@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
@@ -47,6 +48,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        textTheme: GoogleFonts.poppinsTextTheme(),
+        primarySwatch: Colors.blue,
+      ),
+
       home: PostPage(),
     );
   }
@@ -66,8 +72,16 @@ class _PostPageState extends State<PostPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Post'),
+        title: Text('Create a post'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        backgroundColor: Color.fromRGBO(53, 193, 224, 1.0), 
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -77,7 +91,16 @@ class _PostPageState extends State<PostPage> {
             TextFormField(
               controller: _titleController,
               decoration: InputDecoration(
-                labelText: 'Title',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(color: Color.fromRGBO(53, 193, 224, 1.0),),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(color: Color.fromRGBO(53, 193, 224, 1.0),),
+                ),
+
+                hintText: 'Title',
               ),
             ),
             SizedBox(height: 16.0),
@@ -87,7 +110,15 @@ class _PostPageState extends State<PostPage> {
               controller: _contentController,
               maxLines: 5,
               decoration: InputDecoration(
-                labelText: 'Content',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(color: Color.fromRGBO(53, 193, 224, 1.0),),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(color: Color.fromRGBO(53, 193, 224, 1.0),),
+                ),
+                hintText: 'Text (optional)',
               ),
             ),
             SizedBox(height: 16.0),
@@ -104,19 +135,31 @@ class _PostPageState extends State<PostPage> {
               },
               child: Container(
                 height: 100.0,
-                color: Colors.grey[200],
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: Colors.grey[200],
+                ),
                 child: Center(
                   child: _image == null
-                      ? Icon(
-                          Icons.camera_alt,
-                          size: 40.0,
-                          color: Colors.grey,
+                      ? Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          padding: EdgeInsets.all(16.0),
+                          child: Icon(
+                            Icons.camera_alt,
+                            size: 40.0,
+                            color: Colors.grey,
+                          ),
                         )
-                      : Image.file(
-                          _image!,
-                          height: 100.0,
-                          width: 100.0,
-                          fit: BoxFit.cover,
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.file(
+                            _image!,
+                            height: 100.0,
+                            width: 100.0,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                 ),
               ),
@@ -128,7 +171,12 @@ class _PostPageState extends State<PostPage> {
               onPressed: () {
                 _post();
               },
-              child: Text('Post'),
+              child: Text(
+                'Post',
+                style: TextStyle(
+                  color: Color.fromRGBO(53, 193, 224, 1.0),
+                ),
+              ),
             ),
           ],
         ),

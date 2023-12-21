@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  google_fonts: ^2.1.0
   cupertino_icons: ^1.0.2
   image_picker: ^0.8.5
   get: any
