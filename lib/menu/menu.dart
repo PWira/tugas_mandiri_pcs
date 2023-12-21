@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui_ux_mandiri/login.dart';
 
 class NavBar extends StatelessWidget {
   @override
@@ -13,10 +14,12 @@ class NavBar extends StatelessWidget {
             accountEmail: Text('naruto@gmail.com'),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
-                child: Image.network("https://i.pinimg.com/236x/ae/2e/1d/ae2e1d04f74c59c6ebd46e3788dcef23.jpg",
+                child: Image.network(
+                  "https://i.pinimg.com/236x/ae/2e/1d/ae2e1d04f74c59c6ebd46e3788dcef23.jpg",
                   fit: BoxFit.cover,
                   width: 90,
-                  height: 90,),
+                  height: 90,
+                ),
               ),
             ),
             decoration: BoxDecoration(
@@ -59,10 +62,15 @@ class NavBar extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            title: Text('Log Out'),
-            leading: Icon(Icons.exit_to_app),
-            onTap: () {}
-          ),
+              title: Text('Log Out'),
+              leading: Icon(Icons.exit_to_app),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return Login();
+                  },
+                ));
+              }),
         ],
       ),
     );

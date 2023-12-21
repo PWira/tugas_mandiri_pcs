@@ -44,7 +44,6 @@ class _PostPageState extends State<PostPage> {
             // Gambar
             GestureDetector(
               onTap: () {
-                // Tambahkan logika untuk memilih gambar
                 print('Pilih gambar');
               },
               child: Container(
@@ -64,10 +63,9 @@ class _PostPageState extends State<PostPage> {
             // Tombol Post
             ElevatedButton(
               onPressed: () {
-                // Tambahkan logika untuk memposting
                 _post();
               },
-              child: Text('Post'),
+              child: Text('Upload'),
             ),
           ],
         ),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uts_pcs_putrawira/homepage.dart';
-import 'package:uts_pcs_putrawira/menu/menu.dart';
-import 'package:uts_pcs_putrawira/menu/footer.dart';
-import 'package:uts_pcs_putrawira/tools/route.dart';
+import 'package:ui_ux_mandiri/login.dart';
+import 'package:ui_ux_mandiri/menu/footer.dart';
 
 void main() {
   runApp(const MainApp());
@@ -14,14 +12,9 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      onGenerateRoute: RouteGenerator.generateRoute,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          drawer: NavBar(),
-          appBar: AppBar(
-            title: Text('Dashboard'),
-          ),
-          body: HomePage(),
+          body: Login(),
           bottomNavigationBar: Footer(),
         ),
     );
