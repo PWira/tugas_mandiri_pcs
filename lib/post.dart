@@ -6,6 +6,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
+class PostPage extends StatefulWidget {
+  const PostPage({super.key});
+
+  @override
+  _PostPageState createState() => _PostPageState();
+}
+
 Future<File?> pickImage() async {
   final picker = ImagePicker();
   final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -38,31 +45,6 @@ Future<void> postImage(File imageFile) async {
   } catch (e) {
     print('Error uploading image: $e');
   }
-}
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        textTheme: GoogleFonts.poppinsTextTheme(),
-        primarySwatch: Colors.blue,
-      ),
-
-      home: PostPage(),
-    );
-  }
-}
-
-class PostPage extends StatefulWidget {
-  const PostPage({super.key});
-
-  @override
-  _PostPageState createState() => _PostPageState();
 }
 
 class _PostPageState extends State<PostPage> {
