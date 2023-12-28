@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:ui_ux_mandiri/homepage.dart';
@@ -39,21 +40,42 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void handleResponse(http.Response response, String action) {
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = json.decode(response.body);
-      if (data['status'] == 'success') {
-        print('$action successful');
-        Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-      } else {
-        print('$action failed: ${data['message']}');
+  if (response.statusCode == 200) {
+    Map<String, dynamic> data = json.decode(response.body);
+    if (data['status'] == 'success') {
+      switch (action) {
+        case 'Login':
+          print('Login successful');
+          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+          break;
+        case 'Register':
+          print('Registration successful');
+          _clearRegisterInputs(); // Clear register inputs
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Registration successful!')),
+          );
+          break;
+        default:
+          print('Unknown action: $action');
       }
     } else {
-      print('Failed to connect to the server');
+      print('$action failed: ${data['message']}');
+      // Display error message to the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${data['message']}')),
+      );
     }
+  } else {
+    print('Failed to connect to the server');
+    // Handle server connection failure
   }
+}
+
+// Function to clear register inputs
+void _clearRegisterInputs() {
+  registerUsername.clear();
+  registerPassword.clear();
+}
 
   @override
   Widget build(BuildContext context) {
