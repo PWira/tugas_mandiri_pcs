@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui_ux_mandiri/homepage.dart';
 import 'package:ui_ux_mandiri/login.dart';
 import 'package:ui_ux_mandiri/menu/footer.dart';
 
@@ -14,7 +15,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          body: Login(),
+          body: HomePage(),
           bottomNavigationBar: Footer(),
         ),
     );
