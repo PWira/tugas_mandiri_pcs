@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ui_ux_mandiri/homepage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,6 +28,13 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
+  // List of predefined user accounts
+  List<Map<String, String>> userAccounts = [
+    {'username': 'user1', 'password': 'password1'},
+    {'username': 'user2', 'password': 'password2'},
+    // Add more accounts as needed
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Center(
         child: Container(
           padding: EdgeInsets.all(16.0),
-          height: 300.0,
+          height: 310.0,
           width: 300.0,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -46,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
               Text(
                 'Login',
                 style: TextStyle(
-                  fontSize: 18.0,
+                  fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -83,28 +91,38 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _login() {
-  String username = _usernameController.text;
-  String password = _passwordController.text;
+    String enteredUsername = _usernameController.text;
+    String enteredPassword = _passwordController.text;
 
-  // Contoh sederhana, cocokkan username dan password
-  if (username == 'user' && password == 'password') {
-    // Berhasil login, alihkan ke halaman homepage
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => HomePage()), // Gantilah HomePage() dengan nama class halaman homepage Anda
-    );
+    // Check if the entered username and password match any predefined account
+    bool isValidAccount = userAccounts.any((account) =>
+        account['username'] == enteredUsername &&
+        account['password'] == enteredPassword);
 
-    // Tampilkan snackbar atau pesan lainnya jika diperlukan
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Login berhasil')),
-    );
-  } else {
-    // Gagal login, tampilkan pesan kesalahan
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Login gagal. Periksa username dan password')),
-    );
+    if (isValidAccount) {
+      // Berhasil login, alihkan ke halaman homepage
+      _saveUser(enteredUsername);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+
+      // Tampilkan snackbar atau pesan lainnya jika diperlukan
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login berhasil')),
+      );
+    } else {
+      // Gagal login, tampilkan pesan kesalahan
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login gagal. Periksa username dan password')),
+      );
+    }
   }
-}
+
+  void _saveUser(String username) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('username', username);
+  }
 
   void _showSignUpDialog() {
     showDialog(
@@ -116,17 +134,19 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
+                controller: _usernameController,
                 decoration: InputDecoration(labelText: 'Username'),
               ),
               SizedBox(height: 16.0),
               TextField(
+                controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(labelText: 'Password'),
               ),
               SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  _createAccount();
                 },
                 child: Text('Create Account'),
               ),
@@ -135,5 +155,18 @@ class _LoginPageState extends State<LoginPage> {
         );
       },
     );
+  }
+
+  void _createAccount() async {
+    String newUsername = _usernameController.text;
+    String newPassword = _passwordController.text;
+
+    // Add the new account to the list
+    userAccounts.add({'username': newUsername, 'password': newPassword});
+
+    // Contoh sederhana, buat akun baru
+    _saveUser(newUsername);
+
+    Navigator.of(context).pop();
   }
 }
