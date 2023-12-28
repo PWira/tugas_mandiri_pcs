@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui_ux_mandiri/menu/footer.dart';
 import 'package:ui_ux_mandiri/menu/menu.dart';
 import 'package:ui_ux_mandiri/post.dart';
 
@@ -73,6 +74,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+      bottomNavigationBar: Footer(),
       ),
     );
   }
