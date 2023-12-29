@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:ui_ux_mandiri/homepage.dart';
+import 'package:ui_ux_mandiri/register.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,11 +14,9 @@ class _LoginPageState extends State<LoginPage> {
   var loginUsername = TextEditingController();
   var loginPassword = TextEditingController();
 
-  var registerUsername = TextEditingController();
-  var registerPassword = TextEditingController();
-
   Future<void> _loginUser() async {
-    final response = await http.post(Uri.parse("http://192.168.2.19/pcs_mandiri/login.php"), 
+    // final response = await http.post(Uri.parse("http://192.168.2.19/pcs_mandiri/login.php"), 
+    final response = await http.post(Uri.parse("http://192.168.100.73/pcs_mandiri/login.php"), 
     body: {
       "username": loginUsername.text,
       "password": loginPassword.text,
@@ -26,55 +25,22 @@ class _LoginPageState extends State<LoginPage> {
     handleResponse(response, 'Login');
   }
 
-  Future<void> _registerUser() async {
-    final response = await http.post(Uri.parse("http://192.168.2.19/pcs_mandiri/register.php"),
-        body: {
-          "username": registerUsername.text,
-          "password": registerPassword.text,
-        });
-
-    print("Register response status code: ${response.statusCode}");
-    print("Register response body: ${response.body}");
-
-    handleResponse(response, 'Register');
-  }
-
   void handleResponse(http.Response response, String action) {
   if (response.statusCode == 200) {
     Map<String, dynamic> data = json.decode(response.body);
     if (data['status'] == 'success') {
-      switch (action) {
-        case 'Login':
           print('Login successful');
           Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-          break;
-        case 'Register':
-          print('Registration successful');
-          _clearRegisterInputs(); // Clear register inputs
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Registration successful!')),
-          );
-          break;
-        default:
-          print('Unknown action: $action');
-      }
     } else {
       print('$action failed: ${data['message']}');
-      // Display error message to the user
+      // Display error message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('${data['message']}')),
       );
     }
   } else {
     print('Failed to connect to the server');
-    // Handle server connection failure
   }
-}
-
-// Function to clear register inputs
-void _clearRegisterInputs() {
-  registerUsername.clear();
-  registerPassword.clear();
 }
 
   @override
@@ -121,26 +87,21 @@ void _clearRegisterInputs() {
                 SizedBox(height: 16),
                 Divider(color: Colors.black, thickness: 5,),
                 SizedBox(height: 16),
-                Text(
-                  'Register',
+                ElevatedButton(
+                  child: Text('Register',
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
                   ),
-                ),
-                TextField(
-                  controller: registerUsername,
-                  decoration: InputDecoration(labelText: 'Username'),
-                ),
-                TextField(
-                  controller: registerPassword,
-                  obscureText: true,
-                  decoration: InputDecoration(labelText: 'Password'),
-                ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                  child: Text('Register'),
-                  onPressed: _registerUser,
+                  ),
+                  onPressed: () {
+                    Navigator.push(context, 
+                      MaterialPageRoute(builder: (context) {
+                        return RegisterPage();
+                        },
+                      )
+                    );
+                  },
                 ),
               ],
             ),

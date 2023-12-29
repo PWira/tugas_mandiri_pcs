@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ui_ux_mandiri/homepage.dart';
 import 'package:ui_ux_mandiri/login.dart';
 import 'package:ui_ux_mandiri/menu/footer.dart';
-import 'package:ui_ux_mandiri/menu/menu.dart';
-import 'package:ui_ux_mandiri/network/api.dart';
+import 'package:ui_ux_mandiri/_oldcode/api.dart';
 
 void main() {
   runApp(const MainApp());

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -26,15 +25,12 @@ Future<File?> pickImage() async {
 }
 
 Future<void> postImage(File imageFile) async {
-  final url = 'YOUR_SERVER_ENDPOINT'; // Replace with your server endpoint
+  final url = 'YOUR_SERVER_ENDPOINT';
 
-  // Create a multipart request
   var request = http.MultipartRequest('POST', Uri.parse(url));
 
-  // Attach the file
   request.files.add(await http.MultipartFile.fromPath('image', imageFile.path));
 
-  // Send the request
   try {
     final response = await request.send();
     if (response.statusCode == 200) {
@@ -169,15 +165,15 @@ class _PostPageState extends State<PostPage> {
   }
 
   void _post() {
-    // Tambahkan logika untuk memposting, misalnya mengirim data ke server
+    //mengirim data ke server
     String title = _titleController.text;
     String content = _contentController.text;
 
-    // Simpan logika posting disini
+    // posting
     print('Posting: $title - $content');
 
     if (_image != null) {
-      // Post the image to the server
+      //image to server
       postImage(_image!);
     }
   }
