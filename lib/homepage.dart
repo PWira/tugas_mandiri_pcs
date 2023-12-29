@@ -4,7 +4,7 @@ import 'package:ui_ux_mandiri/menu/menu.dart';
 import 'package:ui_ux_mandiri/post.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
