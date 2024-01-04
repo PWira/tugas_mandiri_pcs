@@ -16,7 +16,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          body: HomePage(),
+          body: LoginPage(),
           bottomNavigationBar: Footer(),
         ),
     );

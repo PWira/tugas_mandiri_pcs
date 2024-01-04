@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ui_ux_mandiri/menu/footer.dart';
@@ -100,7 +102,13 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-      bottomNavigationBar: Footer(),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => PostPage()));
+          },
+        ),
+        bottomNavigationBar: Footer(),
       ),
     );
   }

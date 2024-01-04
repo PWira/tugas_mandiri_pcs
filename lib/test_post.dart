@@ -163,7 +163,6 @@ class _PostPageState extends State<PostPage> {
     if (_image != null) {
       // Image to server
       postImage(_image!, title, content);
-      Navigator.pop(context);
     }
   }
 }
