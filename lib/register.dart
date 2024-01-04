@@ -1,139 +1,105 @@
+import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:ui_ux_mandiri/login.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Login App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: RegisterPage(),
-    );
-  }
-}
+import 'package:http/http.dart' as http;
 
 class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  var registerUsername = TextEditingController();
+  var registerPassword = TextEditingController();
 
-  // List of predefined user accounts
-  List<Map<String, String>> userAccounts = [];
+  Future<void> _registerUser() async {
+    // final response = await http.post(Uri.parse("http://192.168.2.19/pcs_mandiri/register.php"),
+    final response = await http.post(
+        Uri.parse("http://192.168.100.73/pcs_mandiri/register.php"),
+        body: {
+          "username": registerUsername.text,
+          "password": registerPassword.text,
+        });
+
+    print("Register response status code: ${response.statusCode}");
+    print("Register response body: ${response.body}");
+
+    handleResponse(response, 'Register');
+  }
+
+  void handleResponse(http.Response response, String action) {
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      if (data['status'] == 'success') {
+        print('Registration successful');
+        _clearRegisterInputs(); // Clear register inputs
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Registration successful!')),
+        );
+        Navigator.pop(context);
+      } else {
+        print('$action failed: ${data['message']}');
+        // Display error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('${data['message']}')),
+        );
+      }
+    } else {
+      print('Failed to connect to the server');
+    }
+  }
+
+  void _clearRegisterInputs() {
+    registerUsername.clear();
+    registerPassword.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 28, vertical: 72),
-          child: Column(
-            children: [
-              Card(
-                elevation: 4.0,
-                color: Colors.white10,
-                margin: EdgeInsets.only(top: 86),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(24),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Register",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 18),
-                      TextField(
-                        controller: _usernameController,
-                        decoration: InputDecoration(labelText: 'Username'),
-                      ),
-                      SizedBox(height: 12),
-                      TextField(
-                        controller: _passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(labelText: 'Password'),
-                      ),
-                      SizedBox(height: 12),
-                      ElevatedButton(
-                        onPressed: () {
-                          _createAccount();
-                        },
-                        child: Text('Create Account'),
-                      ),
-                    ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            margin: EdgeInsets.only(top: 50),
+            padding: EdgeInsets.all(16),
+            height: 500.0,
+            width: 300.0,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Register',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-              SizedBox(height: 24,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Already have an account? ",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => LoginPage()));
-                    },
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                        decoration: TextDecoration.none,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
+                TextField(
+                  controller: registerUsername,
+                  decoration: InputDecoration(labelText: 'Username'),
+                ),
+                TextField(
+                  controller: registerPassword,
+                  obscureText: true,
+                  decoration: InputDecoration(labelText: 'Password'),
+                ),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  child: Text('Register'),
+                  onPressed: _registerUser,
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
-  }
-
-  void _createAccount() async {
-    String newUsername = _usernameController.text;
-    String newPassword = _passwordController.text;
-
-    // Add the new account to the list
-    userAccounts.add({'username': newUsername, 'password': newPassword});
-
-    // Contoh sederhana, buat akun baru
-    _saveUser(newUsername);
-
-    Navigator.of(context).pop();
-  }
-
-  void _saveUser(String username) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('username', username);
   }
 }
