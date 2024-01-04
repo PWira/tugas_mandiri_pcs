@@ -15,8 +15,8 @@ class _RegisterPageState extends State<RegisterPage> {
   var registerPassword = TextEditingController();
 
   Future<void> _registerUser() async {
-    final response = await http.post(Uri.parse("http://192.168.2.19/pcs_mandiri/register.php"),
-    // final response = await http.post(Uri.parse("http://192.168.100.73/pcs_mandiri/register.php"),
+    // final response = await http.post(Uri.parse("http://192.168.2.19/pcs_mandiri/register.php"),
+    final response = await http.post(Uri.parse("http://192.168.100.73/pcs_mandiri/register.php"),
         body: {
           "username": registerUsername.text,
           "password": registerPassword.text,
@@ -32,12 +32,12 @@ class _RegisterPageState extends State<RegisterPage> {
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
       if (data['status'] == 'success') {
-            print('Registration successful');
-            _clearRegisterInputs(); // Clear register inputs
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Registration successful!')),
-            );
-            Navigator.pop(context);
+        print('Registration successful');
+        _clearRegisterInputs(); // Clear register inputs
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Registration successful!')),
+        );
+        Navigator.pop(context);
       } else {
         print('$action failed: ${data['message']}');
         // Display error message
@@ -70,32 +70,49 @@ class _RegisterPageState extends State<RegisterPage> {
               color: Colors.white,
               borderRadius: BorderRadius.circular(8.0),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'Register',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(Icons.arrow_back_ios_outlined,
+                    color: Colors.black,),
+                    backgroundColor: Colors.white, // Set background color to transparent
+                    elevation: 0, // Remove elevation
                   ),
                 ),
-                TextField(
-                  controller: registerUsername,
-                  decoration: InputDecoration(labelText: 'Username'),
-                ),
-                TextField(
-                  controller: registerPassword,
-                  obscureText: true,
-                  decoration: InputDecoration(labelText: 'Password'),
-                ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                  child: Text('Register'),
-                  onPressed: _registerUser,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'Register',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextField(
+                      controller: registerUsername,
+                      decoration: InputDecoration(labelText: 'Username'),
+                    ),
+                    TextField(
+                      controller: registerPassword,
+                      obscureText: true,
+                      decoration: InputDecoration(labelText: 'Password'),
+                    ),
+                    SizedBox(height: 16),
+                    ElevatedButton(
+                      child: Text('Register'),
+                      onPressed: _registerUser,
+                    ),
+                  ],
                 ),
               ],
-            ),
+            )
           ),
         ),
       ),

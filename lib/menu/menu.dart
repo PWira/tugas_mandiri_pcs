@@ -58,7 +58,7 @@ class NavBar extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.notifications),
-            title: Text('Request'),
+            title: Text('Notification'),
           ),
           Divider(),
           ListTile(
@@ -71,11 +71,6 @@ class NavBar extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => Settings()),
               );
             },
-          ),
-          ListTile(
-            leading: Icon(Icons.description),
-            title: Text('Policies'),
-            onTap: () => null,
           ),
           Divider(),
           ListTile(

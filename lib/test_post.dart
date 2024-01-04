@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class PostPage extends StatefulWidget {
   const PostPage({Key? key}) : super(key: key);
@@ -24,31 +25,46 @@ Future<File?> pickImage() async {
   }
 }
 
-Future<void> postImage(File imageFile, String title, String content) async {
-  final url = 'http://192.168.2.19/pcs_mandiri/post.php'; // Ganti dengan URL server Anda
-
-  var request = http.MultipartRequest('POST', Uri.parse(url));
-
-  request.files.add(await http.MultipartFile.fromPath('img', imageFile.path));
-  request.fields['title'] = title;
-  request.fields['content'] = content;
-
-  try {
-    final response = await request.send();
-    if (response.statusCode == 200) {
-      print('Data uploaded successfully!');
-    } else {
-      print('Failed to upload data. Status code: ${response.statusCode}');
-    }
-  } catch (e) {
-    print('Error uploading data: $e');
-  }
-}
-
 class _PostPageState extends State<PostPage> {
   File? _image;
   TextEditingController _titleController = TextEditingController();
   TextEditingController _contentController = TextEditingController();
+
+  Future<void> postImage(File imageFile, String title, String content) async {
+  // final response = 'http://192.168.2.19/pcs_mandiri/post.php'; // Ganti dengan response server Anda
+  final request = http.MultipartRequest('POST', Uri.parse("http://192.168.100.73/pcs_mandiri/post.php"));
+
+  final response = await http.post(Uri.parse("http://192.168.100.73/pcs_mandiri/post.php"),
+  body:{request.files.add(await http.MultipartFile.fromPath('img', imageFile.path)),
+  request.fields['title'] = title,
+  request.fields['content'] = content,});
+
+
+  print("Upload response status code: ${response.statusCode}");
+  print("Register response body: ${response.body}");
+  handleResponse(response, 'Upload');
+}
+
+  void handleResponse(http.Response response, String action) {
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      if (data['status'] == 'success') {
+        print('Upload Successful');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Upload Successful!')),
+        );
+        Navigator.pop(context);
+      } else {
+        print('$action failed: ${data['message']}');
+        // Display error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('${data['message']}')),
+        );
+      }
+    } else {
+      print('Failed to connect to the server');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -164,5 +180,6 @@ class _PostPageState extends State<PostPage> {
       // Image to server
       postImage(_image!, title, content);
     }
+    Navigator.pop(context);
   }
 }

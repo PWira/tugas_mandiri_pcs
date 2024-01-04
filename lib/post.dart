@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class PostPage extends StatefulWidget {
   const PostPage({Key? key}) : super(key: key);
@@ -25,7 +26,8 @@ Future<File?> pickImage() async {
 }
 
 Future<void> postImage(File imageFile, String title, String content) async {
-  final url = 'http://192.168.2.19/pcs_mandiri/post.php'; // Ganti dengan URL server Anda
+  // final url = 'http://192.168.2.19/pcs_mandiri/post.php'; // Ganti dengan URL server Anda
+  final url = 'http://192.168.100.73/pcs_mandiri/post.php'; // Ganti dengan URL server Anda
 
   var request = http.MultipartRequest('POST', Uri.parse(url));
 
@@ -163,7 +165,7 @@ class _PostPageState extends State<PostPage> {
     if (_image != null) {
       // Image to server
       postImage(_image!, title, content);
-      Navigator.pop(context);
     }
+    Navigator.pop(context);
   }
 }
