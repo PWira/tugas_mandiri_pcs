@@ -4,6 +4,7 @@ include('db_query.php');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $token = $_POST['tokens'];
 
     // Validasi atau hash password sesuai kebutuhan
     // Contoh validasi sederhana, sesuaikan dengan kebutuhan aplikasi Anda
@@ -16,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($result->num_rows > 0) {
         // Login berhasil
+        echo json_encode($token);
         $response['status'] = 'success';
         $response['message'] = 'Login successful';
     } else {

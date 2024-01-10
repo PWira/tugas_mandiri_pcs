@@ -3,10 +3,10 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:ui_ux_mandiri/detailpostpage.dart';
 import 'package:ui_ux_mandiri/menu/footer.dart';
 import 'package:ui_ux_mandiri/menu/menu.dart';
-import 'package:ui_ux_mandiri/post.dart';
+import 'package:ui_ux_mandiri/pages/detailpostpage.dart';
+import 'package:ui_ux_mandiri/pages/post.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

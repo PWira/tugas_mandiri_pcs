@@ -2,9 +2,9 @@
 include('db_query.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = $_POST['id'];
+    $usid = $_POST['usid'];
 
-    $result = mysqli_query($bridge, "DELETE FROM users WHERE id='$id'");
+    $result = mysqli_query($bridge, "DELETE FROM users WHERE usid='$usid'");
 
     if($result){
         echo json_encode(['message'=>'Akun berhasil di Delete']);
