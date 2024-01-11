@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:ui_ux_mandiri/menu/footer.dart';
-import 'package:ui_ux_mandiri/post.dart';
+import 'package:ui_ux_mandiri/pages/post.dart';
 
 class LoadPost extends StatefulWidget {
   const LoadPost({Key? key}) : super(key: key);

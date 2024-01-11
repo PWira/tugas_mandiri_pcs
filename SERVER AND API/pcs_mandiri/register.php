@@ -19,10 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Username sudah terdaftar
         $response['status'] = 'error';
         $response['message'] = 'Username already exists';
-    } else {
+    } else{
         // Insert user baru
-        $stmtInsert = $bridge->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
-        $stmtInsert->bind_param("ss", $username, $hashedPassword);
+        $stmtInsert = $bridge->prepare("INSERT INTO users (username, password, tokens) VALUES (?, ?, ?)");
+        $stmtInsert->bind_param("sss", $username, $hashedPassword, $token);
 
         if ($stmtInsert->execute()) {
             $response['status'] = 'success';

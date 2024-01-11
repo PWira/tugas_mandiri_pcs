@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:ui_ux_mandiri/homepage.dart';
+import 'package:ui_ux_mandiri/pages/homepage.dart';
 import 'package:ui_ux_mandiri/loadpost.dart';
 import 'package:ui_ux_mandiri/register.dart';
 

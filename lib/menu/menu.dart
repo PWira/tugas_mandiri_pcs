@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ui_ux_mandiri/login.dart';
 import 'package:ui_ux_mandiri/users/user.dart';
-import 'package:ui_ux_mandiri/settings.dart';
+import 'package:ui_ux_mandiri/menu/settings.dart';
 
 
 class NavBar extends StatelessWidget {
