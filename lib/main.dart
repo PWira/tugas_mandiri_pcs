@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:ui_ux_mandiri/dbHelper/token.dart';
 import 'package:ui_ux_mandiri/login.dart';
-import 'package:ui_ux_mandiri/menu/footer.dart';
+import 'package:ui_ux_mandiri/pages/homepage.dart';
 
-void main() {
-  runApp(const MainApp());
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  bool isLoggedIn = await AuthHelper.isLoggedIn();
+
+  runApp(MainApp(isLoggedIn: isLoggedIn));
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  final bool isLoggedIn;
+
+  MainApp({required this.isLoggedIn});
+
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          body: LoginPage(),
-          bottomNavigationBar: Footer(),
+          body: isLoggedIn ? HomePage() : LoginPage(),
         ),
     );
   }

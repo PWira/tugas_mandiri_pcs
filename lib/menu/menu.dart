@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui_ux_mandiri/dbHelper/token.dart';
 import 'package:ui_ux_mandiri/login.dart';
 import 'package:ui_ux_mandiri/users/user.dart';
 import 'package:ui_ux_mandiri/menu/settings.dart';
@@ -76,7 +77,8 @@ class NavBar extends StatelessWidget {
           ListTile(
               title: Text('Log Out'),
               leading: Icon(Icons.exit_to_app),
-              onTap: () {
+              onTap: () async {
+                await AuthHelper.setLoggedIn(false);
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
                     return LoginPage();

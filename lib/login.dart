@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:ui_ux_mandiri/dbHelper/http_connector.dart';
+import 'package:ui_ux_mandiri/dbHelper/token.dart';
+import 'package:ui_ux_mandiri/env/http_connector.dart';
 import 'package:ui_ux_mandiri/pages/homepage.dart';
 import 'package:ui_ux_mandiri/register.dart';
 
@@ -26,12 +27,13 @@ class _LoginPageState extends State<LoginPage> {
     handleResponse(response, 'Login');
   }
 
-  void handleResponse(http.Response response, String action) {
+  void handleResponse(http.Response response, String action) async {
   if (response.statusCode == 200) {
     Map<String, dynamic> data = json.decode(response.body);
     if (data['status'] == 'success') {
-          print('Login successful');
-          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+      await AuthHelper.setLoggedIn(true);
+      print('Login successful');
+      Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
     } else {
       print('$action failed: ${data['message']}');
       // Display error message

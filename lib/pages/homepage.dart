@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:ui_ux_mandiri/dbHelper/http_connector.dart';
+import 'package:ui_ux_mandiri/env/http_connector.dart';
 import 'package:ui_ux_mandiri/menu/footer.dart';
 import 'package:ui_ux_mandiri/menu/menu.dart';
 import 'package:ui_ux_mandiri/pages/detailpostpage.dart';
