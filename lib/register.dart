@@ -15,9 +15,8 @@ class _RegisterPageState extends State<RegisterPage> {
   var registerPassword = TextEditingController();
 
   Future<void> _registerUser() async {
-    // final response = await http.post(Uri.parse("http://192.168.2.19/pcs_mandiri/register.php"),
-    final response = await http.post(
-        Uri.parse("http://192.168.100.73/pcs_mandiri/register.php"),
+    final response = await http.post(Uri.parse("http://192.168.0.141/pcs_mandiri/login.php"),
+    // final response = await http.post(Uri.parse("http://192.168.100.73/pcs_mandiri/register.php"),
         body: {
           "username": registerUsername.text,
           "password": registerPassword.text,

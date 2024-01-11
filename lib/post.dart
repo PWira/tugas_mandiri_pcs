@@ -26,8 +26,8 @@ Future<File?> pickImage() async {
 }
 
 Future<void> postImage(File imageFile, String title, String content) async {
-  // final url = 'http://192.168.2.19/pcs_mandiri/post.php'; // Ganti dengan URL server Anda
-  final url = 'http://192.168.100.73/pcs_mandiri/post.php'; // Ganti dengan URL server Anda
+  final url = 'http://192.168.0.141/pcs_mandiri/post.php'; // Ganti dengan URL server Anda
+  // final url = 'http://192.168.100.73/pcs_mandiri/post.php'; // Ganti dengan URL server Anda
 
   var request = http.MultipartRequest('POST', Uri.parse(url));
 

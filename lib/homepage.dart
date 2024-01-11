@@ -20,7 +20,8 @@ class _HomePageState extends State<HomePage> {
 
   Future loadPost() async {
     try {
-      final response = await http.get(Uri.parse("http://192.168.100.73/pcs_mandiri/view.php"));
+      final response = await http.get(Uri.parse("http://192.168.0.141/pcs_mandiri/view.php"));
+      // final response = await http.get(Uri.parse("http://192.168.100.73/pcs_mandiri/view.php"));
       return jsonDecode(response.body);
     } catch (e) {
       print('Error loading post data: $e');
@@ -42,8 +43,8 @@ class _HomePageState extends State<HomePage> {
   // Kirim permintaan ke server untuk menyimpan like/dislike
   // Gunakan package http atau package dio untuk melakukan permintaan HTTP
   // Pastikan untuk menyesuaikan URL dan payload sesuai dengan endpoint server Anda
-  final response = await http.post(
-    Uri.parse('http://192.168.100.73/pcs_mandiri/post.php'),
+  final response = await http.post(Uri.parse('http://192.168.0.141/pcs_mandiri/post.php'),
+  // final response = await http.post(Uri.parse('http://192.168.100.73/pcs_mandiri/post.php'),
     body: {
       'pid': pid,
       'jumlahlike': jumlahlike.toString(),
@@ -177,8 +178,9 @@ class _HomePageState extends State<HomePage> {
                                         width: cardWidth,
                                         height: imageHeight,
                                         child: Center(
-                                          child: Image.network(
-                                            "http://192.168.100.73/pcs_mandiri/${post['img']}",
+                                          child: 
+                                          Image.network("http://192.168.0.141/pcs_mandiri/${post['img']}",
+                                          // Image.network("http://192.168.100.73/pcs_mandiri/${post['img']}",
                                             fit: BoxFit.cover,
                                             width: cardWidth,
                                             height: imageHeight,
@@ -341,8 +343,9 @@ class _HomePageState extends State<HomePage> {
                                     width: cardWidth,
                                     height: imageHeight,
                                     child: Center(
-                                      child: Image.network(
-                                        "http://192.168.100.73/pcs_mandiri/${post['img']}",
+                                      child: 
+                                      Image.network("http://192.168.0.141/pcs_mandiri/${post['img']}",
+                                      // Image.network("http://192.168.100.73/pcs_mandiri/${post['img']}",
                                         fit: BoxFit.cover,
                                         width: cardWidth,
                                         height: imageHeight,
@@ -375,7 +378,8 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       SizedBox(height: 4.0),
                                       FutureBuilder(
-                                        future: fetchTextFromServer("http://192.168.100.73/pcs_mandiri/${post['content']}"),
+                                        future: fetchTextFromServer("http://192.168.0.141/pcs_mandiri/${post['content']}"),
+                                        // future: fetchTextFromServer("http://192.168.100.73/pcs_mandiri/${post['content']}"),
                                         builder: (context, textSnapshot) {
                                           try {
                                             if (textSnapshot.connectionState == ConnectionState.waiting) {
