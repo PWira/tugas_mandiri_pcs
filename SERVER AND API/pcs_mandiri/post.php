@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tempname_ = $_FILES['img']['tmp_name'];
     $imgFolder = 'DATABASES/img/';
     $contentFolder = 'DATABASES/content/';
-    $commentFolder = 'DATABASES/comment/';
+    // $commentFolder = 'DATABASES/comment/';
 
     $imgPath = $imgFolder . $img_;
     move_uploaded_file($tempname_, $imgPath);
@@ -22,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $contentPath = $contentFolder . $title . '.txt';
     file_put_contents($contentPath, $content);
     
-    $commentPath = $commentFolder . $usid . "_" . $pid . "_" . $title . '.txt';
-    file_put_contents($commentPath, $comment);
+    // $commentPath = $commentFolder . $usid . "_" . $pid . "_" . $title . '.txt';
+    // file_put_contents($commentPath, $comment);
 
     switch (true) {
         case $imgPath != null && $title != null && $contentPath != null:

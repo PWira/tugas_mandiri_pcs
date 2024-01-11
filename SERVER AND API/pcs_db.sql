@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2024 at 04:15 PM
+-- Generation Time: Jan 11, 2024 at 04:58 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -43,7 +43,6 @@ CREATE TABLE `comment` (
 
 CREATE TABLE `post` (
   `pid` int(11) NOT NULL,
-  `usid` int(11) NOT NULL,
   `jumlahlike` int(11) NOT NULL,
   `img` varchar(100) NOT NULL,
   `title` varchar(50) NOT NULL,
@@ -66,14 +65,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`usid`, `username`, `password`, `created_at`, `tokens`) VALUES
-(9, 'wira', 'd8578edf8458ce06fbc5bb76a58c5ca4', '2024-01-10', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IndpcmEifQ.b3P7t-DWwfI6a2Shr0W-E6ehpwkmXHANSu65Ma40Lt8'),
-(10, 'rango', '5fe00f52e64e7eaeade842dbf0df08f8', '2024-01-10', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InJhbmdvIn0.2nGVB45E_i-kyH8X0noDOYEVE7-L_416bGElt2IEFEQ');
-
---
 -- Indexes for dumped tables
 --
 
@@ -89,8 +80,7 @@ ALTER TABLE `comment`
 -- Indexes for table `post`
 --
 ALTER TABLE `post`
-  ADD PRIMARY KEY (`pid`),
-  ADD KEY `usid_fk` (`usid`);
+  ADD PRIMARY KEY (`pid`);
 
 --
 -- Indexes for table `users`
@@ -112,13 +102,13 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `usid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `usid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
