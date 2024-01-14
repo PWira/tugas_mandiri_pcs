@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2024 at 04:58 AM
+-- Generation Time: Jan 14, 2024 at 06:40 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -50,6 +50,13 @@ CREATE TABLE `post` (
   `created_at` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `post`
+--
+
+INSERT INTO `post` (`pid`, `jumlahlike`, `img`, `title`, `content`, `created_at`) VALUES
+(13, 0, 'DATABASES/img/jeruk.jpg', 'Jeruk', 'DATABASES/content/Jeruk.txt', '2024-01-11');
+
 -- --------------------------------------------------------
 
 --
@@ -63,6 +70,13 @@ CREATE TABLE `users` (
   `created_at` date NOT NULL DEFAULT current_timestamp(),
   `tokens` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`usid`, `username`, `password`, `created_at`, `tokens`) VALUES
+(12, 'wira', 'd8578edf8458ce06fbc5bb76a58c5ca4', '2024-01-11', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IndpcmEifQ.L2D9hUVq0fCdH_d9ENhtuiHWYDml45HmTdYWPeiYyR4');
 
 --
 -- Indexes for dumped tables
@@ -102,13 +116,13 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `usid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `usid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
