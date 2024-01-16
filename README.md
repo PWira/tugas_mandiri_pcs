@@ -5,8 +5,8 @@ Anggota :
 1. Putra Wira Albarokah
 2. Muhammad Alif Al Fajra
 3. Ferdiansyah Massa
-4. Raja Dadan Sambora
-5. Joelyanto Fernando
+4. Joelyanto Fernando
+5. Raja Dadan Sambora
 
 # INSTALLATION
 
