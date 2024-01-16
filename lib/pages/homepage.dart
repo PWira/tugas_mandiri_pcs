@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
 
   Future loadPost() async {
     try {
-      final response = await http.get(Uri.parse("http://${httpC}pcs_mandiri/view.php"));
+      final response = await http.get(Uri.parse("http://${httpC}/pcs_mandiri/view.php"));
       return jsonDecode(response.body);
     } catch (e) {
       print('Error loading post data: $e');
@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> sendLikeRequest(String pid, int jumlahlike) async {
   final response = await http.post(
-    Uri.parse('http://${httpC}pcs_mandiri/post.php'),
+    Uri.parse('http://${httpC}/pcs_mandiri/post.php'),
     body: {
       'pid': pid,
       'jumlahlike': jumlahlike.toString(),
@@ -70,6 +70,90 @@ class _HomePageState extends State<HomePage> {
   });
   }
 
+   void _showPopupMenu(BuildContext context, Map<String, dynamic> post) async {
+    final dropChoice = await showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(1000.0, 1000.0, 0.0, 0.0),
+      items: [
+        PopupMenuItem<String>(
+          value: 'share',
+          child: Text('Share'),
+        ),
+        PopupMenuItem<String>(
+          value: 'delete',
+          child: Text('Delete'),
+        ),
+      ],
+    );
+    switch (dropChoice) {
+      case 'share':
+        // Handle share
+        break;
+      case 'delete':
+        _handleDeleteButtonPress(post);
+        break;
+      default:
+        break;
+    }
+  }
+
+  Future<void> _handleDeleteButtonPress(Map<String, dynamic> post) async {
+    bool confirmDelete = await _showDeleteConfirmationDialog();
+    
+    if (confirmDelete) {
+      await sendDeleteRequest(post['pid']);
+      await loadPost();
+      setState(() {
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Post Dihapus'),
+        ),
+      );
+    } else {
+      return;
+    }
+  }
+
+  Future<bool> _showDeleteConfirmationDialog() async {
+    return await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Menghapus Post'),
+          content: Text('Hapus Postingan?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false); //canceled
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true); //confirmed
+              },
+              child: Text('Delete'),
+            ),
+          ],
+        );
+      },
+    ) ?? false; // The dialog is dismissed
+  }
+
+  Future<void> sendDeleteRequest(String pid) async {
+    final response = await http.post(
+      Uri.parse('http://${httpC}/pcs_mandiri/delete.php'),
+      body: {
+        'pid': pid,
+      },
+    );
+
+    if (response.statusCode != 200) {
+      print('Failed to send delete request. Status code: ${response.statusCode}');
+    }
+  }
+
   void navigateToDetailPost(BuildContext context, Map<String, dynamic> post) {
     Navigator.push(
       context,
@@ -80,17 +164,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   String truncateSubtitle(String subtitle) {
-  // Split the subtitle into words
-  List<String> words = subtitle.split(' ');
-
-  // Limit the number of words to 10-20
-  int maxLength = 20;
-  int truncatedLength = words.length > maxLength ? maxLength : words.length;
-
-  // Join the words back together
-  String truncatedSubtitle = words.sublist(0, truncatedLength).join(' ');
-
-  return truncatedSubtitle;
+    List<String> words = subtitle.split(' ');
+    int maxLength = 20;
+    int truncatedLength = words.length > maxLength ? maxLength : words.length;
+    String truncatedSubtitle = words.sublist(0, truncatedLength).join(' ');
+    return truncatedSubtitle;
   }
 
   int myCurrentIndex = 0;
@@ -171,7 +249,7 @@ class _HomePageState extends State<HomePage> {
                                         height: imageHeight,
                                         child: Center(
                                           child: Image.network(
-                                            "http://${httpC}pcs_mandiri/${post['img']}",
+                                            "http://${httpC}/pcs_mandiri/${post['img']}",
                                             fit: BoxFit.cover,
                                             width: cardWidth,
                                             height: imageHeight,
@@ -230,9 +308,9 @@ class _HomePageState extends State<HomePage> {
                                           },
                                         ),
                                         IconButton(
-                                          icon: Icon(Icons.share),
-                                          onPressed: () {
-                                            
+                                          icon: Icon(Icons.more_vert),
+                                          onPressed: () async {
+                                            _showPopupMenu(context, post);
                                           },
                                         ),
                                       ],
@@ -293,7 +371,7 @@ class _HomePageState extends State<HomePage> {
                                     height: imageHeight,
                                     child: Center(
                                       child: Image.network(
-                                        "http://${httpC}pcs_mandiri/${post['img']}",
+                                        "http://${httpC}/pcs_mandiri/${post['img']}",
                                         fit: BoxFit.cover,
                                         width: cardWidth,
                                         height: imageHeight,
@@ -326,7 +404,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       SizedBox(height: 4.0),
                                       FutureBuilder(
-                                        future: fetchTextFromServer("http://${httpC}pcs_mandiri/${post['content']}"),
+                                        future: fetchTextFromServer("http://${httpC}/pcs_mandiri/${post['content']}"),
                                         builder: (context, textSnapshot) {
                                           try {
                                             if (textSnapshot.connectionState == ConnectionState.waiting) {
@@ -382,9 +460,9 @@ class _HomePageState extends State<HomePage> {
                                       },
                                     ),
                                     IconButton(
-                                      icon: Icon(Icons.share),
-                                      onPressed: () {
-                                        
+                                      icon: Icon(Icons.more_vert),
+                                      onPressed: () async {
+                                        _showPopupMenu(context, post);
                                       },
                                     ),
                                   ],

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 
-var connector = "192.168.100.73/";
+var connector = "192.168.100.73";
 
 getHttpC(){
   return connector;
@@ -16,7 +16,7 @@ class HttpConnector {
   Future<String?> requestToken(String username) async {
     try {
       final response = await http.post(
-        Uri.parse('http://${baseUrl}/db_query.php'), // Sesuaikan dengan path endpoint di server
+        Uri.parse('http://${baseUrl}/db_query.php'),
         body: {'username': username},
       );
 

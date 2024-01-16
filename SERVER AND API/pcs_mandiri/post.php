@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tempname_ = $_FILES['img']['tmp_name'];
     $imgFolder = 'DATABASES/img/';
     $contentFolder = 'DATABASES/content/';
-    // $commentFolder = 'DATABASES/comment/';
+    $commentFolder = 'DATABASES/comment';
 
     $imgPath = $imgFolder . $img_;
     move_uploaded_file($tempname_, $imgPath);
