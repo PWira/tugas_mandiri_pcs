@@ -18,11 +18,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final httpC = getHttpC();
+  final httpFormat = getHttpFormat();
   Set<String> likedPosts = Set<String>();
 
   Future loadPost() async {
     try {
-      final response = await http.get(Uri.parse("http://${httpC}/pcs_mandiri/view.php"));
+      final response = await http.get(Uri.parse("$httpFormat$httpC/pcs_mandiri/view.php"));
       return jsonDecode(response.body);
     } catch (e) {
       print('Error loading post data: $e');
@@ -42,7 +43,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> sendLikeRequest(String pid, int jumlahlike) async {
   final response = await http.post(
-    Uri.parse('http://${httpC}/pcs_mandiri/post.php'),
+    Uri.parse('$httpFormat$httpC/pcs_mandiri/post.php'),
     body: {
       'pid': pid,
       'jumlahlike': jumlahlike.toString(),
@@ -143,7 +144,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> sendDeleteRequest(String pid) async {
     final response = await http.post(
-      Uri.parse('http://${httpC}/pcs_mandiri/delete.php'),
+      Uri.parse('$httpFormat$httpC/pcs_mandiri/delete.php'),
       body: {
         'pid': pid,
       },
@@ -173,6 +174,10 @@ class _HomePageState extends State<HomePage> {
 
   int myCurrentIndex = 0;
   bool isNewsLiked = false;
+
+
+// WIDGET APP BELOW
+
 
   @override
   Widget build(BuildContext context) {
@@ -215,7 +220,7 @@ class _HomePageState extends State<HomePage> {
                       initialPage: 3,
                       enlargeCenterPage: false,
                       aspectRatio: 16 / 9,
-                      height: 200,
+                      height: 220,
                       onPageChanged: (index, reason) {
                         setState(() {
                           myCurrentIndex = index;
@@ -249,7 +254,7 @@ class _HomePageState extends State<HomePage> {
                                         height: imageHeight,
                                         child: Center(
                                           child: Image.network(
-                                            "http://${httpC}/pcs_mandiri/${post['img']}",
+                                            "$httpFormat$httpC/pcs_mandiri/${post['img']}",
                                             fit: BoxFit.cover,
                                             width: cardWidth,
                                             height: imageHeight,
@@ -371,7 +376,7 @@ class _HomePageState extends State<HomePage> {
                                     height: imageHeight,
                                     child: Center(
                                       child: Image.network(
-                                        "http://${httpC}/pcs_mandiri/${post['img']}",
+                                        "$httpFormat$httpC/pcs_mandiri/${post['img']}",
                                         fit: BoxFit.cover,
                                         width: cardWidth,
                                         height: imageHeight,
@@ -404,7 +409,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       SizedBox(height: 4.0),
                                       FutureBuilder(
-                                        future: fetchTextFromServer("http://${httpC}/pcs_mandiri/${post['content']}"),
+                                        future: fetchTextFromServer("$httpFormat$httpC/pcs_mandiri/${post['content']}"),
                                         builder: (context, textSnapshot) {
                                           try {
                                             if (textSnapshot.connectionState == ConnectionState.waiting) {

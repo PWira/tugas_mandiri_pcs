@@ -13,12 +13,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final httpC = getHttpC();
+  final httpFormat = getHttpFormat();
   var loginUsername = TextEditingController();
   var loginPassword = TextEditingController();
 
   Future<void> _loginUser() async {
-    // final response = await http.post(Uri.parse("http://192.168.2.19/pcs_mandiri/login.php"), 
-    final response = await http.post(Uri.parse("http://${httpC}/pcs_mandiri/login.php"), 
+    final response = await http.post(Uri.parse("$httpFormat$httpC/pcs_mandiri/login.php"), 
     body: {
       "username": loginUsername.text,
       "password": loginPassword.text,

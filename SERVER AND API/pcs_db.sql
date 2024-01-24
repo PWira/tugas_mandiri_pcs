@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2024 at 06:40 AM
+-- Generation Time: Jan 24, 2024 at 07:20 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,20 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `pcs_db`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `comment`
---
-
-CREATE TABLE `comment` (
-  `com_id` int(11) NOT NULL,
-  `usid` int(11) NOT NULL,
-  `pid` int(11) NOT NULL,
-  `comment` varchar(100) NOT NULL,
-  `com_date` date NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -55,7 +41,8 @@ CREATE TABLE `post` (
 --
 
 INSERT INTO `post` (`pid`, `jumlahlike`, `img`, `title`, `content`, `created_at`) VALUES
-(13, 0, 'DATABASES/img/jeruk.jpg', 'Jeruk', 'DATABASES/content/Jeruk.txt', '2024-01-11');
+(13, 0, 'DATABASES/img/jeruk.jpg', 'Jeruk', 'DATABASES/content/Jeruk.txt', '2024-01-11'),
+(20, 0, 'DATABASES/img/patah hati.jpg', 'Ambasing', 'DATABASES/content/Ambasing.txt', '2024-01-24');
 
 -- --------------------------------------------------------
 
@@ -83,14 +70,6 @@ INSERT INTO `users` (`usid`, `username`, `password`, `created_at`, `tokens`) VAL
 --
 
 --
--- Indexes for table `comment`
---
-ALTER TABLE `comment`
-  ADD PRIMARY KEY (`com_id`),
-  ADD KEY `usid_fk` (`usid`),
-  ADD KEY `pid_fk` (`pid`);
-
---
 -- Indexes for table `post`
 --
 ALTER TABLE `post`
@@ -107,22 +86,16 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `comment`
---
-ALTER TABLE `comment`
-  MODIFY `com_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `usid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `usid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
