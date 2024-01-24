@@ -2,21 +2,26 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 
-var connector = "192.168.2.58";
+var connector = "liniapp.000webhostapp.com";
+var httpOrS = 'https://';
 
 getHttpC(){
   return connector;
 }
+getHttpFormat(){
+  return httpOrS;
+}
 
 class HttpConnector {
   String baseUrl = connector;
+  String baseFormat = httpOrS;
 
   HttpConnector(this.baseUrl);
 
   Future<String?> requestToken(String username) async {
     try {
       final response = await http.post(
-        Uri.parse('http://${baseUrl}/db_query.php'),
+        Uri.parse('$baseFormat$baseUrl/db_query.php'),
         body: {'username': username},
       );
 

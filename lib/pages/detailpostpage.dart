@@ -15,10 +15,11 @@ class DetailPostPage extends StatefulWidget {
 
 class _DetailPostPageState extends State<DetailPostPage> {
   final httpC = getHttpC();
+  final httpFormat = getHttpFormat();
 
   Future loadPost() async {
     try {
-      final response = await http.get(Uri.parse("http://${httpC}/pcs_mandiri/view.php"));
+      final response = await http.get(Uri.parse("$httpFormat$httpC/pcs_mandiri/view.php"));
       return jsonDecode(response.body);
     } catch (e) {
       print('Error loading post data: $e');
@@ -73,7 +74,7 @@ class _DetailPostPageState extends State<DetailPostPage> {
             ),
             SizedBox(height: 8.0),
             Image.network(
-              "http://${httpC}/pcs_mandiri/${widget.post['img']}",
+              "$httpFormat$httpC/pcs_mandiri/${widget.post['img']}",
               fit: BoxFit.cover,
               width: 300,
               height: 300,
@@ -91,7 +92,7 @@ class _DetailPostPageState extends State<DetailPostPage> {
             ),
             SizedBox(height: 8.0),
             FutureBuilder(
-              future: fetchTextFromServer("http://${httpC}/pcs_mandiri/${widget.post['content']}"),
+              future: fetchTextFromServer("$httpFormat$httpC/pcs_mandiri/${widget.post['content']}"),
               builder: (context, textSnapshot) {
                 try {
                   if (textSnapshot.connectionState == ConnectionState.waiting) {

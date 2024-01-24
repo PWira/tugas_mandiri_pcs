@@ -12,12 +12,13 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final httpC = getHttpC();
+  final httpFormat = getHttpFormat();
   var registerUsername = TextEditingController();
   var registerPassword = TextEditingController();
 
   Future<void> _registerUser() async {
     final response = await http.post(
-        Uri.parse("http://${httpC}/pcs_mandiri/register.php"),
+        Uri.parse("$httpFormat$httpC/pcs_mandiri/register.php"),
         body: {
           "username": registerUsername.text,
           "password": registerPassword.text,

@@ -1,6 +1,13 @@
 <?php
 
-$bridge = new mysqli("localhost","root","","pcs_db");
+$sqlkey = new sqlPassword();
+
+$website = 'localhost';
+$namaSql = 'id21810772_test';
+$namaUser = 'id21810772_root';
+$secret_key = "1qaz)OKM";
+
+$bridge = new mysqli($website,$namaUser,$secret_key,$namaSql);
 $username = "1234567890qwerty";
 
 class tokens {
