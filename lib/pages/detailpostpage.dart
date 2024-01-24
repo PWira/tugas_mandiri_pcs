@@ -108,7 +108,6 @@ class _DetailPostPageState extends State<DetailPostPage> {
                           alignment: Alignment.center,
                         ),
                         SizedBox(height: 4.0),
-                        // Truncate the subtitle to 10-20 words
                         Text(
                           contentText,
                           style: TextStyle(color: Colors.black, fontSize: 14.0),
@@ -123,8 +122,6 @@ class _DetailPostPageState extends State<DetailPostPage> {
               },
             ),
             SizedBox(height: 16.0),
-            // Tampilkan seluruh isi subtitle, like, dan komentar di sini
-            // ...
           ],
         ),
       ),
