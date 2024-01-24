@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 
 var connector = "liniapp.000webhostapp.com";
-var httpOrS = 'https://';
+var httpOrS = 'http://';
 
 getHttpC(){
   return connector;

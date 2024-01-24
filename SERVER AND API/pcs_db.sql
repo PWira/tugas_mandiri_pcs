@@ -41,8 +41,7 @@ CREATE TABLE `post` (
 --
 
 INSERT INTO `post` (`pid`, `jumlahlike`, `img`, `title`, `content`, `created_at`) VALUES
-(13, 0, 'DATABASES/img/jeruk.jpg', 'Jeruk', 'DATABASES/content/Jeruk.txt', '2024-01-11'),
-(20, 0, 'DATABASES/img/patah hati.jpg', 'Ambasing', 'DATABASES/content/Ambasing.txt', '2024-01-24');
+(13, 0, 'DATABASES/img/jeruk.jpg', 'Jeruk', 'DATABASES/content/Jeruk.txt', '2024-01-11');
 
 -- --------------------------------------------------------
 
