@@ -205,12 +205,15 @@ class _HomePageState extends State<HomePage> {
                     return Center(child: Text('Error loading data. Please try again later.'));
                   }
 
-                  if (!snapshot.hasData || snapshot.data.isEmpty) {
-                    return Center(child: Text('Tidak ada yang melakukan posting.'));
+                  if (!snapshot.hasData) {
+                    return Center(child: Text('Loading data...'));
                   }
 
                   List<dynamic> dataList = snapshot.data as List<dynamic>;
 
+                  if (dataList.isEmpty) {
+                    return Center(child: Text('Tidak ada yang melakukan posting.'));
+                  }
                   return CarouselSlider(
                     options: CarouselOptions(
                       autoPlay: true,
@@ -342,12 +345,15 @@ class _HomePageState extends State<HomePage> {
                       return Center(child: Text('Error loading data. Please try again later.'));
                     }
 
-                    if (!snapshot.hasData || snapshot.data.isEmpty) {
-                      return Center(child: Text('Tidak ada yang melakukan posting.'));
+                    if (!snapshot.hasData) {
+                      return Center(child: Text('Loading data...'));
                     }
 
                     List<dynamic> dataList = snapshot.data as List<dynamic>;
 
+                    if (dataList.isEmpty) {
+                      return Center(child: Text('Tidak ada yang melakukan posting.'));
+                    }
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
