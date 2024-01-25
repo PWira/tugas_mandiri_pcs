@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     switch (true) {
         case $imgPath != null && $title != null && $contentPath != null:
-            $stmt = mysqli_prepare($bridge, "INSERT INTO post (img, title, content) VALUES (?, ?, ?)");
+            $stmt = mysqli_prepare($bridge, "INSERT INTO post(img, title, content) VALUES (?, ?, ?)");
             mysqli_stmt_bind_param($stmt, "sss", $imgPath, $title, $contentPath);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
