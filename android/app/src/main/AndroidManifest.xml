@@ -2,7 +2,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:label="ui_ux_mandiri"
+        android:label="LiniApp"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
